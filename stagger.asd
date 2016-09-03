@@ -20,7 +20,7 @@
   :version "0.1.0"
   :author "Mark"
   :license ""
-  :depends-on ()
+  :depends-on (restas)
   :components ((:module "src"
                 :components
                 ((:file "stagger"))))
