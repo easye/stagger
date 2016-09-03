@@ -1,0 +1,32 @@
+* Stagger 
+
+Tooling for transcriptions for OpenAPI contracts
+
+<https://openapis.org/>
+<https://github.com/OAI/OpenAPI-Specification>
+
+** Usage
+
+** Installation
+
+   1.  Clone this repository locally.
+
+   2.  Symlink into ASDF config repository
+ 
+#+BEGIN_SRC bash
+mkdir -p ~/.config/common-lisp/source-registry.conf.d
+ln -s ~/work/stagger/src/stagger.conf ~/.config/common-lisp/source-registry.conf.d/stagger.conf
+#+END_SRC
+
+   3.  Now Stagger may be tested via 
+#+BEGIN_SRC lisp
+(asdf:test-system :stagger)
+#+END_SRC
+
+** Author
+
++ Mark (<evenson.not.org@gmail.com>)
+
+** Copyright
+
+Copyright (c) 2016 Mark (<evenson.not.org@gmail.com>)

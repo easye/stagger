@@ -3,12 +3,31 @@
   Copyright (c) 2016 Mark (<evenson.not.org@gmail.com>)
 |#
 
-(in-package :cl-user)
-(defpackage stagger-test-asd
-  (:use :cl :asdf))
-(in-package :stagger-test-asd)
+#-quicklisp 
+#+abcl
+(eval-when (:load-toplevel :execute)
+  (asdf:load-system :quicklisp-abcl))
+;;#-abcl
+;;(eval-when (:load-toplevel :execute)
+;;  (load #p"~/quicklisp/setup.lisp")
 
-(defsystem stagger-test
+(in-package :cl-user)
+(defpackage stagger-asd
+  (:use :cl :asdf))
+(in-package :stagger-asd)
+
+(defsystem stagger
+  :version "0.1.0"
+  :author "Mark"
+  :license ""
+  :depends-on ()
+  :components ((:module "src"
+                :components
+                ((:file "stagger"))))
+  :description ""
+  :in-order-to ((test-op (test-op stagger-test))))
+
+(defsystem stagger/test
   :author "Mark"
   :license ""
   :depends-on (:stagger
