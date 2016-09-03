@@ -25,7 +25,7 @@
                 :components
                 ((:file "stagger"))))
   :description ""
-  :in-order-to ((test-op (test-op stagger-test))))
+  :in-order-to ((test-op (test-op stagger/test))))
 
 (defsystem stagger/test
   :author "Mark"
