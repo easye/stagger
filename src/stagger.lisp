@@ -8,10 +8,26 @@
   (if s
       (intern s)
       (gensym)))
-   
-(defmacro restas-endpoint (uri &rest args &body body)
-  `(restas:define-route (`,(symbol-from uri) uri ,@args)
-       ,@body))
+
+(defun wash-args (args)
+  (let ((removed-args nil)
+        (new-args nil)
+        (push-next-p nil))
+    (dolist (arg args)
+      (cond
+        (push-next-p
+         (push arg removed-args)
+         (setf push-next-p nil))
+        ((find arg '(:args :result :doc))
+          (push arg removed-args)
+          (setf push-next-p t))
+        (t
+         (push arg new-args))))
+  (values new-args removed-args)))
+      
+(defmacro restas-endpoint (uri &rest args)
+  `(list ,uri ,(string (symbol-from uri))  ,@args))
+
 
 #| 
 
