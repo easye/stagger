@@ -5,6 +5,23 @@ Tooling for transcriptions for OpenAPI contracts
 <https://openapis.org/>
 <https://github.com/OAI/OpenAPI-Specification>
 
+** Depedendencies
+
+*** libyaml
+<https://bitbucket.org/xi/libyaml>
+
+**** Macports
+#+BEGIN_SRC 
+sudo port install libyaml
+#+END_SRC
+
+**** Patch Quicklisp to find library
+illin:~/quicklisp/dists/quicklisp/software/cl-libyaml-20151218-git/src$ diff library.lisp{.orig,}
+8c8
+<   (:darwin (:or "libyaml.dylib" "libyaml-0.2.dylib"))
+---
+>   (:darwin (:or "libyaml.dylib" "libyaml-0.2.dylib" "/opt/local/lib/libyaml.dylib"))
+
 ** Usage
 
 ** Installation

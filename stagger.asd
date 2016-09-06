@@ -19,22 +19,26 @@
 (defsystem stagger
   :version "0.1.0"
   :author "Mark"
-  :license ""
-  :depends-on (restas)
-  :components ((:module "src"
-                :components
-                ((:file "stagger"))))
-  :description ""
+  :license "BSD"
+  :depends-on (restas
+               cl-yaml)
+  :components ((:module "package"
+                        :pathname "src/"
+                        :components ((:file "package")))
+               (:module "src"
+                        :depends-on (package)
+                        :components ((:file "stagger"))))
+  :description "Tools for extracting, manipulating and transpiling OpenAPI specifications."
   :in-order-to ((test-op (test-op stagger/test))))
 
 (defsystem stagger/test
   :author "Mark"
-  :license ""
+  :license "BSD"
   :depends-on (:stagger
                :prove)
   :components ((:module "t"
                 :components
-                ((:test-file "stagger"))))
+                ((:test-file "staggering"))))
   :description "Test system for stagger"
 
   :defsystem-depends-on (:prove-asdf)

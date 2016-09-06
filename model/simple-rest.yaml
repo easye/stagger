@@ -1,0 +1,70 @@
+---
+swagger: '2.0'
+info:
+  # 0.1.0:  corresponds to existing contract for prototype with mineblimp_gui
+  version: 0.1.0
+  title: Mineblimp GUI API
+  description: Mineblimp API for GUI interactions
+  basePath: /
+paths:
+  /snapshot:
+    get:
+      responses:
+        default:
+          description: Enumerate all existing snapshots on the CIFS mount
+          schema:
+            type: array
+            items:
+              type: object
+              properties:
+                id:
+                  # This value shall not contain whitespace:  TODO can we constrain this in the schema?
+                  type: string
+                  description: Identifier for this snapshot
+                snapshot:
+                  type: string
+                  description: Filesystem path for snapshot
+  /snapshot/create:
+    get:
+      description: Create a new snapshot on the CIFS mount
+      responses:
+        200:
+          description: OK
+          schema:
+            type: object
+            properties:
+              id:
+                type: string
+              snapshot:
+                type: string
+  /sia/upload:
+    post:
+      response:
+        200:
+          description: Upload successfully initiated 
+    parameters:
+    - name: snapshot
+      description: Filesystem path of snapshot to upload
+      required: true
+      type: string
+  /sia/renter/files:
+    get:
+      response:
+        200:
+          description: Status of initiated upload contracts
+          schema:
+            type: array
+            description: Enumeration of current uploads
+            properties:
+              siapath:
+                type: string
+              filesize:
+                type: string  # uint64
+              available:
+                type: string  # boolean
+              renewing:
+                type: string # boolean
+              uploadprogress:
+                type: string # float64
+              expiration:
+                type: string # types.BlockHeight (uint64)

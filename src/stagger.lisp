@@ -1,8 +1,4 @@
-(in-package :cl-user)
-(defpackage stagger
-  (:use :cl :restas))
 (in-package :stagger)
-
 
 (defun symbol-from (s)
   (if s
@@ -42,3 +38,10 @@
    IMPLEMENTATION
 
 |#
+
+(defun parse (pathname)
+  (let ((p (if (pathnamep pathname)
+                pathname
+                (pathname pathname))))
+    (cl-yaml:parse p)))
+
