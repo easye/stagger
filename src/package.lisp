@@ -1,5 +1,5 @@
 (defpackage stagger
-  (:use :cl)
+  (:use #:cl)
   (:export
-   #:parse))
+   #:parse-yaml))
 

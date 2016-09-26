@@ -1,5 +1,5 @@
 #|
-  This file is a part of stagger project.
+  This file is a part of the stagger project.
   Copyright (c) 2016 Mark (<evenson.not.org@gmail.com>)
 |#
 
@@ -11,10 +11,8 @@
 ;;(eval-when (:load-toplevel :execute)
 ;;  (load #p"~/quicklisp/setup.lisp")
 
-(in-package :cl-user)
-(defpackage stagger-asd
-  (:use :cl :asdf))
-(in-package :stagger-asd)
+(require :asdf)
+(in-package :asdf)
 
 (defsystem stagger
   :version "0.1.0"

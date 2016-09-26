@@ -24,7 +24,6 @@
 (defmacro restas-endpoint (uri &rest args)
   `(list ,uri ,(string (symbol-from uri))  ,@args))
 
-
 #| 
 
 (restas-endpoint ("relative/path"
@@ -39,7 +38,7 @@
 
 |#
 
-(defun parse (pathname)
+(defun parse-yaml (pathname)
   (let ((p (if (pathnamep pathname)
                 pathname
                 (pathname pathname))))

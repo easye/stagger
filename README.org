@@ -5,8 +5,7 @@ Tooling for transcriptions for OpenAPI contracts
 <https://openapis.org/>
 <https://github.com/OAI/OpenAPI-Specification>
 
-** Depedendencies
-
+** Dependencies
 *** libyaml
 <https://bitbucket.org/xi/libyaml>
 
