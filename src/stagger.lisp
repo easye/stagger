@@ -1,25 +1,10 @@
 (in-package :stagger)
 
-(defun symbol-from (s)
-  (if s
-      (intern (format nil "%~A" (string-upcase s)))
-      (gensym)))
-
-#| 
-(restas-endpoint ("relative/path"
-                  :method :post
-                  :args ((arg1 :source :query 
-                               :type :string)
-                         (arg2 :source :parameters 
-                               :type :string))
-                  :content-type "mime/type ;; or ("application/pdf" "other-mime/type")
-                  :result schema)
-   IMPLEMENTATION
-|#
-
-(defvar *open-api-keywords* '(:args :result :doc))
+(defparameter *open-api-keywords* '(:args :result :doc))
 
 (defun wash-args (args)
+  "Washes the plist ARGS into two values.  The first value contains
+all properties not in the *OPEN-API-KEYWORDS* special."
   (let ((removed-args nil)
         (new-args nil)
         (push-next-p nil))
@@ -36,21 +21,32 @@
     (values (reverse new-args)
             (reverse removed-args))))
 
-(defmacro restas-endpoint ((uri &rest args) body)
-  (multiple-value-bind (restas-args other)
-      (wash-args args)
-    (let ((symbol (symbol-from uri)))
-      `(progn
-         (restas:define-route ,symbol (,uri ,@restas-args)
-           ,@body)
-         ,(loop :for keyword :in *open-api-keywords*
-             :when (getf other keyword)
-             :collect `(setf (get ,symbol ,keyword)
-                             (getf ,other ,keyword)))))))
-
 (defun parse-yaml (pathname)
   (let ((p (if (pathnamep pathname)
                 pathname
                 (pathname pathname))))
     (cl-yaml:parse p)))
+
+(defun symbol-from (s)
+  (if s
+      (intern (format nil "%~A" (string-upcase s)))
+      (gensym)))
+
+(defun api-symbols (package)
+  (loop :for symbol :being :each :present-symbol :in (find-package package)
+     :when (search "%" (symbol-name symbol))
+     :collect symbol))
+
+(defun introspect-paths (package)
+  (loop :for symbol :in (api-symbols package)
+     :collecting (get symbol :url)))
+
+(defun set-property-list-form (symbol annotations)
+  (let ((setters
+         (loop :for keyword :in *open-api-keywords*
+            :when (getf annotations keyword)
+            :collect `(setf (get ',symbol ,keyword)
+                            ',(getf annotations keyword)))))
+    `(progn ,@setters)))
+
 

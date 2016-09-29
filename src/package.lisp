@@ -1,6 +1,11 @@
 (defpackage stagger
   (:use #:cl)
   (:export
-   #:restas-endpoint
-   #:parse-yaml))
+   ;;; Currently external for testing
+   #:set-property-list-form
+   #:parse-yaml
+
+   ;;; API for stagger
+   #:endpoint))
+
 
