@@ -8,7 +8,7 @@
                                     :consumes
                                     :deprecated
                                     :schemes ;; probably should be separated out
-                                    :external-id))
+                                    :operation-id))
 
 (defun wash-args (args)
   "Washes the plist ARGS into two values.  The first value contains
