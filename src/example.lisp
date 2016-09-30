@@ -12,7 +12,10 @@
 (stagger:endpoint %farm ("./animal"
                          :doc "Retrieve ANIMAL for FARMER."
                          :args ((animal :source :parameter) (farmer :source :query))
-                         :result (:schema t)
+                         :responses (200 (:schema :parenscript
+                                                  (create type "animal"
+                                                          data "{0}"))
+                                    (400 (:content-type "text/plain")))
                          :content-type "text/plain")
   (format nil "Old MacDonald has a ~a on his farm." animal))
 

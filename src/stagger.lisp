@@ -1,6 +1,14 @@
 (in-package :stagger)
 
-(defparameter *open-api-keywords* '(:args :result :doc))
+(defparameter *open-api-keywords* '(:security
+                                    :args :parameters
+                                    :responses
+                                    :doc :summary :description :external-docs 
+                                    :produces
+                                    :consumes
+                                    :deprecated
+                                    :schemes ;; probably should be separated out
+                                    :external-id))
 
 (defun wash-args (args)
   "Washes the plist ARGS into two values.  The first value contains
