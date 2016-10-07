@@ -6,6 +6,7 @@
     (load quicklisp-init)))
 
 (dolist (system '(:restas
-                  :cl-yaml
-                  :prove)
+                  :cl-yaml :libyaml
+                  :prove))
   (ql:quickload system))
+
