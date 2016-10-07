@@ -49,3 +49,12 @@
   :perform (test-op :after (op c)
                     (funcall (intern #.(string :run-test-system) :prove-asdf) c)
                     (asdf:clear-system c)))
+
+;;; I'm an evil runtime thingie: figure out how to eliminate me
+(eval-when (:compile-toplevel :load-toplevel :execute)
+  (let ((quicklisp-dependencies (asdf:system-relative-pathname :chute "quicklisp-setup.lisp")))
+    (format t "~&Doing a QL:QUICKLOAD across all dependencies declared in <file:~a> ...~^"
+            quicklisp-dependencies)
+
+    (format t "~&DONE executing QL:QUICKLOAD forms from <file:~a>.~^"
+            quicklisp-dependencies)))
