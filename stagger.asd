@@ -7,22 +7,23 @@
 #+abcl
 (eval-when (:load-toplevel :execute)
   (asdf:load-system :quicklisp-abcl))
-;;#-abcl
-;;(eval-when (:load-toplevel :execute)
-;;  (load #p"~/quicklisp/setup.lisp")
-
+(in-package :cl-user)
 (require :asdf)
-(in-package :asdf)
 
-(defsystem stagger
-  :version "0.1.0"
-  :author "Mark"
-  :license "BSD"
-  :depends-on (restas
-               cl-yaml)
+(asdf:defsystem stagger
+  :description
+  "Tools for extracting, manipulating and transpiling OpenAPI specifications."
+  :version "0.2.0" :author "e@not.org" :license "BSD"
+  :depends-on (anaphora ;; TODO move onerous dependencies into sub systems 
+               cl-yaml
+               restas
+               parenscript)
   :components ((:module "package"
                         :pathname "src/"
                         :components ((:file "package")))
+               (:module "runtime"
+                        :pathname "src/"
+                        :components ((:file "macos")))
                (:module "src"
                         :depends-on (package)
                         :components ((:file "stagger")
@@ -30,12 +31,11 @@
                (:module "example"
                         :pathname "src/"
                         :components ((:file "example"))))
-  :description "Tools for extracting, manipulating and transpiling OpenAPI specifications."
-  :in-order-to ((test-op (test-op stagger/test))))
+  :in-order-to ((asdf:test-op (asdf:test-op stagger/test))))
 
-(defsystem stagger/test
-  :author "Mark"
-  :license "BSD"
+(asdf:defsystem stagger/test
+  :author "Mark" :license "BSD"
+  :defsystem-depends-on (:prove-asdf)
   :depends-on (stagger
                prove)
   :components ((:module "package"
@@ -45,17 +45,7 @@
                         :components ((:test-file "java-swagger")
                                      (:test-file "staggering"))))
   :description "Test system for stagger"
-  :defsystem-depends-on (:prove-asdf)
-  :perform (test-op :after (op c)
-                    (funcall (intern #.(string :run-test-system) :prove-asdf) c)
-                    (asdf:clear-system c)))
+  :perform (asdf:test-op :after (op c)
+                         (uiop:symbol-call :prove-asdf 'run-test-system c)))
 
-;;; I'm an evil runtime thingie: figure out how to eliminate me
-(eval-when (:compile-toplevel :load-toplevel :execute)
-  (let ((quicklisp-dependencies (asdf:system-relative-pathname :stagger "src/quicklisp-dependencies.lisp")))
-    (format t "~&Doing a QL:QUICKLOAD across all dependencies declared in <file:~a> ...~^"
-            quicklisp-dependencies)
-
-    (format t "~&DONE executing QL:QUICKLOAD forms from <file:~a>.~^"
-            quicklisp-dependencies)))
 

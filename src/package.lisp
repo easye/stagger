@@ -1,11 +1,20 @@
 (defpackage stagger
+  (:nicknames #:bitbucket.org/easye/stagger)
   (:use #:cl)
   (:export
-   ;;; Currently external for testing
-   #:set-property-list-form
-   #:parse-yaml
 
-   ;;; API for stagger
-   #:endpoint))
+   ;;; Declare REST endpoints API for stagger
+   #:endpoint
+
+   ;; API for macrology for endpoint construction
+   #:set-property-list-form
+   #:let-args
+
+   ;; wrapping cl-yaml
+   #:parse-yaml))
+
+
+
+
 
 

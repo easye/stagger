@@ -1,6 +1,7 @@
 (in-package :stagger)
 
 #| 
+Targeted USAGE
 (restas-endpoint ("relative/path"
                   :method :post
                   :args ((arg1 :source :query 
@@ -35,14 +36,18 @@ RESTAS:DEFINE-ROUTE or one of the following annotation forms:
       (wash-args args)
     `(progn
         (restas:define-route ,symbol (,uri ,@restas-args)
+           ,(let-args annotations)
            ,@body)
         (eval-when (:compile-toplevel :load-toplevel :execute)
              (setf (get ',symbol :relative-uri) ,uri)
             ,(stagger:set-property-list-form symbol annotations)))))
 
+(defun let-args (annotations)
+  (anaphora:awhen (find :args annotations)
+    (quote it)))
 
-;;; (UNUSED) A version of the macro which contructs a symbol from the URI for
-;;; binding to the route
+;;; (UNUSED) A version of the endpoint macro which contructs a symbol
+;;; from the URI for binding to the route
 #+nil
 (defmacro endpoint/synthetic-symbol ((uri &rest args) &body body)
   (let ((symbol (symbol-from uri)))

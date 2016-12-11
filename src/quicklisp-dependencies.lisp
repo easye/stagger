@@ -8,5 +8,6 @@
 (dolist (system '(:restas
                   :cl-yaml :libyaml
                   :prove))
-  (ql:quickload system))
+  (unless (asdf:find-system system)
+    (ql:quickload system)))
 
