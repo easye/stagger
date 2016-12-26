@@ -1,0 +1,99 @@
+---
+swagger: '2.0'
+info:
+  version: 0/2/0
+  title: Mineblimp GUI API
+  description: Mineblimp API for GUI interactions
+  basePath: /
+paths:
+  /getSnapshot:
+  /snapshot:
+    get:
+      responses:
+        default:
+          description: Enumerate all existing snapshots on the CIFS mount
+          schema:
+            type: array
+            items:
+              type: object
+              properties:
+                id:
+                  # This value shall not contain whitespace:  TODO can we constrain this in the schema?
+                  type: string
+                  description: Identifier for this snapshot
+                snapshot:
+                  type: string
+                  description: Filesystem path for snapshot
+                size:
+                  type: integer
+                  description: Size of snapshot in bytes
+                files:
+                  type: integer
+                  description: Total number of files in this snapshot
+                date:
+                  type: integer
+                  description: Milliseconds since the UNIX epoch at which this snapshot was created
+  /snapshot/create:
+    get:
+      description: Create a new snapshot on the CIFS mount
+      responses:
+        200:
+          description: OK
+          schema:
+            type: object
+            properties:
+              id:
+                type: string
+              snapshot:
+                type: string
+  /sia/upload:
+    post:
+      response:
+        200:
+          description: Upload successfully initiated 
+    parameters:
+    - name: snapshot
+      description: Id of snapshot to upload
+      required: true
+      type: string
+  /sia/renter/files:
+    get:
+      response:
+        200:
+          description: Status of initiated upload contracts
+          schema:
+            type: array
+            description: Enumeration of current uploads
+            properties:
+              siapath:
+                type: string
+              filesize:
+                type: string  # uint64
+              available:
+                type: string  # boolean
+              renewing:
+                type: string # boolean
+              uploadprogress:
+                type: string # float64
+              expiration:
+                type: string # types.BlockHeight (uint64)
+  /contract/sia/renter:
+  /contract/sia/renter/{id}:
+  /contract/sia/farmer:
+    get:
+      response:
+        200: 
+          description: Enumeration of existing renter contracts
+          schema:
+            type: 
+              array
+  /contract/sia/farmer/{id}:
+    get:
+      response:
+        200: 
+          description: Details for contract with ID
+
+
+
+          
+  

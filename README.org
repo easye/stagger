@@ -7,19 +7,21 @@ Tooling for transcriptions for OpenAPI contracts
 
 ** Dependencies
 *** libyaml
+The operating system package for libyaml should be installed.
+
 <https://bitbucket.org/xi/libyaml>
 
 **** Macports
+1. Install libyaml.dylib
 #+BEGIN_SRC 
 sudo port install libyaml
 #+END_SRC
-
-**** Patch Quicklisp to find library
-illin:~/quicklisp/dists/quicklisp/software/cl-libyaml-20151218-git/src$ diff library.lisp{.orig,}
-8c8
-<   (:darwin (:or "libyaml.dylib" "libyaml-0.2.dylib"))
----
->   (:darwin (:or "libyaml.dylib" "libyaml-0.2.dylib" "/opt/local/lib/libyaml.dylib"))
+2. Patch CFFI's lookup strategy
+#+BEGIN_SRC 
+  (setf cffi:*foreign-library-directories*
+        (push #p"/opt/local/lib/"
+              cffi:*foreign-library-directories*)))
+#+END_SRC
 
 ** Usage
 

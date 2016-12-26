@@ -2,21 +2,23 @@
 
 (in-package :stagger/test)
 
-(when (asdf:load-system :minebox)
-  (plan 1)
-  (let ((output-directory (namestring (ensure-directories-exist
-                                       (asdf/system:system-relative-pathname :stagger "var/")))))
-    (dolist (lang (list "swagger" "go-server" "html" "java"))
-      (diag (format nil "Outputing '~A' OpenAPI artifacts to '~A'" lang output-directory))
-      (is (uiop/run-program:run-program
-           `(,(asdf/system:system-relative-pathname :minebox "src/rest/swagger.bash")
-              "generate"
-              "-i" ,(namestring (asdf:system-relative-pathname
-                                 :minebox "src/lisp/routes/0.2.0/mineblimp-0.2.0.yaml"))
-              "-l" ,lang
-              "-o" ,output-directory)
-           :output t)
-          nil))))
+
+(let ((output-directory (namestring (ensure-directories-exist
+                                     (asdf/system:system-relative-pathname :stagger "var/"))))
+      (input-file (namestring (asdf:system-relative-pathname
+                               :stagger "model/mineblimp-0.2.0.yaml")))
+      (swagger-script (asdf/system:system-relative-pathname :stagger "src/bash/swagger.bash")))
+  (dolist (lang (list "swagger" "go-server" "html" "java"))
+    (diag (format nil "Outputing '~A' OpenAPI artifacts to '~A'" lang output-directory))
+    (plan 1)
+    (is (uiop/run-program:run-program
+         `(,swagger-script
+           "generate"
+           "-i" ,input-file
+           "-l" ,lang
+           "-o" ,output-directory)
+         :output t)
+        nil)))
 
 (finalize)
 

@@ -38,11 +38,14 @@
   :defsystem-depends-on (:prove-asdf)
   :depends-on (stagger
                prove)
-  :components ((:module "package"
-                        :pathname "src/"
-                        :components ((:file "package-test")))
-               (:module "t"
+  :components ((:module package
+                        :pathname "t/"
+                        :components ((:file "package")))
+               (:module source
+                        :pathname "t/"
+                        :depends-on (package)
                         :components ((:test-file "java-swagger")
+                                     (:test-file "api")
                                      (:test-file "staggering"))))
   :description "Test system for stagger"
   :perform (asdf:test-op :after (op c)
