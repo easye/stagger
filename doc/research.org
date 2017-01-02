@@ -1,0 +1,15 @@
+* OWL-S 1.2 
+<http://www.ai.sri.com/daml/services/owl-s/1.2/>
+
+http://www.ai.sri.com/daml/services/owl-s/1.2/Service.owl
+http://www.ai.sri.com/daml/services/owl-s/1.2/Profile.owl
+http://www.ai.sri.com/daml/services/owl-s/1.2/Process.owl
+http://www.ai.sri.com/daml/services/owl-s/1.2/Grounding.owl
+
+http://www.ai.sri.com/daml/services/owl-s/1.2/generic/Expression.owl
+
+http://www.ai.sri.com/daml/services/owl-s/1.2/generic/ObjectList.owl
+
+
+** An Ontology-based Representation of the Google+ API
+<https://encrypted.google.com/url?sa=t&rct=j&q=&esrc=s&source=web&cd=1&ved=0ahUKEwiVo7av9qDRAhUK1hQKHTavAKgQFggZMAA&url=https%3A%2F%2Fwww.thinkmind.org%2Fdownload.php%3Farticleid%3Dmopas_2012_1_30_50020&usg=AFQjCNFHq_zxXpCBeLjwzcVs7Xn3CSkxNg&bvm=bv.142059868,d.d24&cad=rja>
