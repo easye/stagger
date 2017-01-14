@@ -14,7 +14,8 @@
   :description
   "Tools for extracting, manipulating and transpiling OpenAPI specifications."
   :version "0.2.0" :author "e@not.org" :license "BSD"
-  :depends-on (anaphora ;; TODO move onerous dependencies into sub systems 
+  :depends-on (anaphora ;; TODO move onerous dependencies into sub systems
+               simple-date-time
                cl-yaml
                restas
                parenscript)
