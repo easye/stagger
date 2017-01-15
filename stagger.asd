@@ -13,7 +13,7 @@
 (asdf:defsystem stagger
   :description
   "Tools for extracting, manipulating and transpiling OpenAPI specifications."
-  :version "0.2.0" :author "e@not.org" :license "BSD"
+  :version "0.3.0" :author "e@not.org" :license "BSD"
   :depends-on (anaphora ;; TODO move onerous dependencies into sub systems
                simple-date-time
                cl-yaml
@@ -34,9 +34,18 @@
                         :components ((:file "example"))))
   :in-order-to ((asdf:test-op (asdf:test-op stagger/test))))
 
+#+abcl
+(asdf:defsystem stagger/java
+                :depends-on (stagger jss)
+                :defsystem-depends-on (abcl-asdf)
+                :components ((:mvn "io.swagger/swagger-codegen-cli/2.2.1")
+                             (:module source
+                                      :pathname "src/"
+                                      :components ((:file "swagger")))))
+
 (asdf:defsystem stagger/test
   :author "Mark" :license "BSD"
-  :defsystem-depends-on (:prove-asdf)
+  :defsystem-depends-on (prove-asdf)
   :depends-on (stagger
                prove)
   :components ((:module package
