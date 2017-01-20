@@ -39,6 +39,7 @@
                 :depends-on (stagger jss)
                 :defsystem-depends-on (abcl-asdf)
                 :components ((:mvn "io.swagger/swagger-codegen-cli/2.2.1")
+                             (:mvn "io.swagger/swagger-codegen/2.2.1")
                              (:module source
                                       :pathname "src/"
                                       :components ((:file "swagger")))))

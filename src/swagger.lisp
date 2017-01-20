@@ -18,3 +18,6 @@
            (java:jnew-array-from-list "java.lang.String"
                                       '("langs"))))
 
+
+(export '(swagger-model swagger/help swagger/languages)
+        :stagger)
